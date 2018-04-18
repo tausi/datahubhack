@@ -58,15 +58,15 @@ participant ClaimsAdjustor extends User {
 
 transaction AddClaim {
   o Double claimAmount
-  --> VehicleListing listing
+  --> PoliceReport report
   --> Claimant member
 }
 
 transaction AddPerson {
-  --> VehicleListing listing
+  --> PoliceReport report
   --> Claimant member
 }
 
 transaction CloseClaim {
-  --> VehicleListing listing
+  --> PoliceReport report
 }
