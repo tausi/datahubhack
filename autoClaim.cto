@@ -25,11 +25,24 @@ enum ReportStatus {
   o CLOSED
 }
 
+enum ClaimStatus {
+  o APPROVED
+  o FLAGGED
+  o PENDING
+  o DECLINED
+}
+
 asset PoliceReport identified by caseID {
   o String caseID
   o String ReportType
   o String description
   o ReportStatus status 
+  --> Vehicle vehicle
+}
+
+asset Claim identified by claimID{
+  o String claimID
+  o ClaimStatus status 
   --> Vehicle vehicle
 }
 
@@ -59,14 +72,14 @@ participant ClaimsAdjustor extends User {
 transaction AddClaim {
   o Double claimAmount
   --> PoliceReport report
-  --> Claimant member
+  --> Claim claim
 }
 
 transaction AddPerson {
-  --> PoliceReport report
   --> Claimant member
 }
 
 transaction CloseClaim {
   --> PoliceReport report
+  --> Claim claim
 }
