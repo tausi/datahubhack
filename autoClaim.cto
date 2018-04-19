@@ -97,7 +97,7 @@ transaction AddClaim {
 }
 
 transaction FlagPerson {
-  --> Claimant member
+  --> Claimant claimant
 }
 
 transaction CloseClaim {
