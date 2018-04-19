@@ -15,6 +15,9 @@
  */
 namespace org.acme.vehicle.claim
 
+/**
+ * Assets
+ */
 asset Vehicle identified by vin {
   o String vin
   --> Claimant owner
@@ -26,8 +29,8 @@ enum ReportStatus {
 }
 
 enum ClaimStatus {
-  o APPROVED
   o FLAGGED
+  o APPROVED
   o PENDING
   o DECLINED
 }
@@ -46,36 +49,54 @@ asset Claim identified by claimID{
   --> Vehicle vehicle
 }
 
+/**
+ * Particpants
+ */
 abstract participant User identified by email {
   o String email
   o String firstName
   o String lastName
 }
 
-participant Claimant extends User {
-  o Double claimAmount
+abstract participant Entity identified by entityID {
+  o String entityID
+  o String entityName
 }
 
-participant InsuranceCompany extends User {
+enum FraudulentStatus{
+  o YES
+  o NO
+}
+
+
+participant Claimant extends User {
+  o Double claimAmount
+  o FraudulentStatus fraudulent
+}
+
+participant InsuranceCompany extends Entity {
   o Double claimPayment
 }
 
-participant DMV extends User {
+participant DMV extends Entity {
 }
 
-participant NICB extends User {
+participant NICB extends Entity {
 }
 
 participant ClaimsAdjustor extends User {
 }
 
+/**
+ * Transactions
+ */
 transaction AddClaim {
   o Double claimAmount
   --> PoliceReport report
   --> Claim claim
 }
 
-transaction AddPerson {
+transaction FlagPerson {
   --> Claimant member
 }
 
